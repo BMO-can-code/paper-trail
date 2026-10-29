@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #0b0a08;
+  --color-panel: #12100d;
+  --color-panel2: #191613;
+  --color-line: #2b251e;
+  --color-ink: #f2ece1;
+  --color-muted: #a29785;
+  --color-amber: #e0a44b;
+  --color-green: #6fcf9d;
+  --color-red: #e5675f;
+}
+
+/* next/font variables live on <body>, so resolve these inline per element. */
+@theme inline {
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(60% 45% at 75% -5%, rgba(224, 164, 75, 0.12), transparent 65%),
+    radial-gradient(45% 35% at 5% 8%, rgba(111, 207, 157, 0.06), transparent 65%),
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: auto, auto, 48px 48px, 48px 48px;
+  mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 95%);
+}
+
+::selection {
+  background: rgba(224, 164, 75, 0.3);
+  color: #fff;
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .card {
+    border: 1px solid var(--color-line);
+    background: linear-gradient(180deg, rgba(25, 22, 19, 0.92), rgba(18, 16, 13, 0.94));
+    border-radius: 0.9rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-amber);
+    color: #1a1305;
+    font-weight: 650;
+    border-radius: 0.6rem;
+    padding: 0.7rem 1.15rem;
+    transition: filter 120ms ease, transform 120ms ease;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.55rem;
+    padding: 0.45rem 0.75rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--color-amber);
+    color: var(--color-ink);
+  }
+
+  .hairline {
+    border-top: 1px solid var(--color-line);
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+}
+
+.source-card:target {
+  border-color: var(--color-amber);
+  box-shadow: 0 0 0 1px var(--color-amber);
+}
+
+.trace-line::before {
+  content: "";
+  position: absolute;
+  left: 0.53rem;
+  top: 1.35rem;
+  bottom: -0.65rem;
+  width: 1px;
+  background: var(--color-line);
+}
+
+.trace-line:last-child::before {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
