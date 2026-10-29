@@ -96,9 +96,10 @@ curl -N -X POST https://<host>/api/research \
   -d '{"question":"What does the EU AI Act require from providers of general-purpose AI models?"}' \
   | tee /tmp/papertrail.sse
 
-# 3. Pull the run id from the final event, then fetch the stored brief
+# 3. Pull the run id and the self-contained payload from the final event
 BRIEF_ID=$(grep -o '"type":"brief".*' /tmp/papertrail.sse | grep -o '"id":"[a-z0-9]*"' | head -1 | cut -d'"' -f4)
-curl -s "https://<host>/api/brief/$BRIEF_ID" \
+B=$(grep -o '"permalink":"[A-Za-z0-9_-]*"' /tmp/papertrail.sse | head -1 | cut -d'"' -f4)
+curl -s "https://<host>/api/brief/$BRIEF_ID?b=$B" \
   | jq '{meta, claims: [.claims[] | {text, quote, sourceId}]}'
 ```
 
@@ -168,7 +169,7 @@ vercel env add NEBIUS_API_KEY production
 vercel env add TAVILY_API_KEY production
 ```
 
-Vercel functions are stateless, so this deployment stores briefs under `/tmp`. Old permalinks can expire on a cold start; the UI says so. Mount a volume and set `PAPERTRAIL_DATA_DIR` for durable history.
+Vercel functions are stateless and do not share `/tmp`, so this deployment also carries a compressed copy of each brief in the copied permalink (`/brief/<id>?b=…`); the server copy is preferred when it exists. Mount a volume and set `PAPERTRAIL_DATA_DIR` for durable server-side history.
 
 ## Safety and limits
 
@@ -208,6 +209,7 @@ src/lib/nemotron.ts             streaming client, retry, token/latency logs
 src/lib/tavily.ts               runtime Tavily search + extract
 src/lib/tools.ts                tool schemas, SSRF guard, quote verifier
 src/lib/store.ts                brief persistence
+src/lib/permalink.ts            self-contained ?b= permalink payloads
 src/lib/mock.ts                 labelled scripted trace
 src/components/                 console, trace, brief
 scripts/stub-upstream.mjs       local contract-test stub (not deployed)

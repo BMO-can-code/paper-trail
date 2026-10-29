@@ -24,9 +24,11 @@ function sourceFor(brief: Brief, id: string): Source | undefined {
 export function BriefView({
   brief,
   permalink = true,
+  permalinkPayload,
 }: {
   brief: Brief;
   permalink?: boolean;
+  permalinkPayload?: string;
 }) {
   const { meta } = brief;
   return (
@@ -60,7 +62,10 @@ export function BriefView({
         <span className="pill">{brief.sources.length} stored source{brief.sources.length === 1 ? "" : "s"}</span>
         <span className="pill">{ms(meta.totalMs)} end-to-end</span>
         {permalink ? (
-          <Link className="pill hover:border-amber hover:text-ink" href={`/brief/${brief.id}`}>
+          <Link
+            className="pill hover:border-amber hover:text-ink"
+            href={`/brief/${brief.id}${permalinkPayload ? `?b=${permalinkPayload}` : ""}`}
+          >
             Permalink ↗
           </Link>
         ) : null}

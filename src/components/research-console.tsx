@@ -26,6 +26,7 @@ export function ResearchConsole({
   const [phase, setPhase] = useState("");
   const [narration, setNarration] = useState("");
   const [brief, setBrief] = useState<Brief | null>(null);
+  const [permalink, setPermalink] = useState<string | null>(null);
   const [error, setError] = useState<{ message: string; hint?: string } | null>(null);
   const [isMockRun, setIsMockRun] = useState(mock);
 
@@ -63,6 +64,7 @@ export function ResearchConsole({
         break;
       case "brief":
         setBrief(event.brief);
+        setPermalink(event.permalink ?? null);
         setStatus("done");
         saw.terminal = true;
         break;
@@ -86,6 +88,7 @@ export function ResearchConsole({
     setSteps([]);
     setNarration("");
     setBrief(null);
+    setPermalink(null);
     setError(null);
     setPhase("Connecting");
     setStatus("running");
@@ -310,7 +313,7 @@ export function ResearchConsole({
                 </button>
               </div>
             ) : brief ? (
-              <BriefView brief={brief} />
+              <BriefView brief={brief} permalinkPayload={permalink ?? undefined} />
             ) : (
               <div className="card p-6">
                 <p className="font-serif text-2xl text-ink/80">

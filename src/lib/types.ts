@@ -65,5 +65,5 @@ export type RunEvent =
   | { type: "delta"; text: string }
   | { type: "step"; step: TraceStep }
   | { type: "step_update"; id: string; patch: Partial<TraceStep> }
-  | { type: "brief"; brief: Brief }
+  | { type: "brief"; brief: Brief; permalink?: string }
   | { type: "error"; message: string; hint?: string };

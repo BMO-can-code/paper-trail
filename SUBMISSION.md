@@ -73,7 +73,7 @@ Legend: `[x]` verified in this repo / on the deployment · `[ ]` blocked, with t
 ## What is deliberately not claimed
 
 - No benchmarks, accuracy percentages, user counts, or cost-per-run figures. None were measured.
-- No "production-ready" claim: there is no rate limiting, and brief storage is `/tmp` on Vercel (ephemeral, labelled in the UI).
+- No "production-ready" claim: there is no rate limiting, and server-side brief storage is per-instance `/tmp` on Vercel (copied links carry the brief, but there is no account, history list, or durable store).
 - The prose summary is model-written from verified claims; only the **claims and their quotes** are machine-checked.
 
 ## Next three commands

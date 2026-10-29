@@ -1,6 +1,7 @@
 import { runAgent, AgentError } from "@/lib/agent";
 import { LIMITS, MOCK_MODE, NEBIUS_MODEL } from "@/lib/config";
 import { runMock } from "@/lib/mock";
+import { encodeBrief } from "@/lib/permalink";
 import type { RunEvent } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -40,6 +41,10 @@ export async function POST(request: Request) {
       let closed = false;
       const send = (event: RunEvent) => {
         if (closed) return;
+        // Vercel instances do not share /tmp, so carry the brief in the link.
+        if (event.type === "brief") {
+          event = { ...event, permalink: encodeBrief(event.brief) };
+        }
         try {
           controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
         } catch {
