@@ -22,7 +22,7 @@
 | 1:35–2:00 | Verified brief | Scroll to **Claims & receipts**. Click the first source chip; the source opens. Return to the brief. | "Every claim carries the sentence it came from. Click the receipt and you're on the page." |
 | 2:00–2:20 | `/api/health` in a new tab, then run metadata | Open `https://<host>/api/health`. Highlight `"mode":"live"` and `"model":"nvidia/nemotron-3-super-120b-a12b"`. Switch back and point at latency/tokens. | "This is the model the deployment is actually calling, and the run metadata: latency, tokens in and out, tool calls." |
 | 2:20–2:40 | DevTools Network filtered to `tavily` | Open DevTools, click the preserved `search` and `extract` requests. Show `Request URL: https://api.tavily.com/...` and status 200. | "Tavily isn't mocked. These are the runtime calls from that run — search, then extract, both 200." |
-| 2:40–2:55 | Permalink page | Click **Permalink ↗**. Show the `/brief/<id>` URL and the same claims. | "And the whole thing is shareable down to the receipts. Paper Trail: research that shows its receipts." |
+| 2:40–2:55 | Permalink page | Click **Permalink ↗**. Show the `/brief/<id>?b=…` URL and the same claims. | "The brief travels inside the link, so it still opens after the server copy is gone. Paper Trail: research that shows its receipts." |
 | 2:55–3:00 | End card | Static card: repo URL, `MIT`, model ID. | "Repo and setup are in the description." |
 
 ## If a live call fails on camera
